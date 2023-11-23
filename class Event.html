@@ -1,0 +1,72 @@
+class Event:
+    def _init_(self, name, date, location, description):
+        self.name = name
+        self.date = date
+        self.location = location
+        self.description = description
+        self.attendees = []
+
+    def display_info(self):
+        print(f"\nEvent: {self.name}")
+        print(f"Date: {self.date}")
+        print(f"Location: {self.location}")
+        print(f"Description: {self.description}")
+        print(f"Attendees: {', '.join(self.attendees)}")
+
+class EventManager:
+    def _init_(self):
+        self.events = []
+
+    def create_event(self, name, date, location, description):
+        event = Event(name, date, location, description)
+        self.events.append(event)
+        print(f"Event '{name}' created successfully!")
+
+    def view_events(self):
+        if not self.events:
+            print("No events available.")
+        else:
+            for event in self.events:
+                event.display_info()
+
+    def register_attendee(self, event_name, attendee_name):
+        for event in self.events:
+            if event.name == event_name:
+                event.attendees.append(attendee_name)
+                print(f"{attendee_name} registered for {event_name}.")
+                return
+        print(f"Event '{event_name}' not found.")
+
+# Example usage
+event_manager = EventManager()
+
+while True:
+    print("\nEvent Management System Menu:")
+    print("1. Create Event")
+    print("2. View Events")
+    print("3. Register Attendee")
+    print("4. Exit")
+
+    choice = input("Enter your choice (1-4): ")
+
+    if choice == "1":
+        name = input("Enter event name: ")
+        date = input("Enter event date: ")
+        location = input("Enter event location: ")
+        description = input("Enter event description: ")
+        event_manager.create_event(name, date, location, description)
+
+    elif choice == "2":
+        event_manager.view_events()
+
+    elif choice == "3":
+        event_name = input("Enter event name: ")
+        attendee_name = input("Enter attendee name: ")
+        event_manager.register_attendee(event_name, attendee_name)
+
+    elif choice == "4":
+        print("Exiting Event Management System. Goodbye!")
+        break
+
+    else:
+        print("Invalid choice. Please enter a number between 1 and 4.")
